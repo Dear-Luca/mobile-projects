@@ -1,0 +1,9 @@
+#build
+**/build/
+*.gradle/
+*.idea/
+
+#generated
+.DS_Store
+*.jar
+*.lock
