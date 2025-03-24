@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -32,10 +33,10 @@ fun AppBar(navController: NavHostController){
     //every time there is a recomposition I want to update AppBar
     val backStackEntry by navController.currentBackStackEntryAsState()
     val title = when {
-        backStackEntry?.destination?.hasRoute<NavigationRoute.Screen1>() == true -> "Screen 1"
-        backStackEntry?.destination?.hasRoute<NavigationRoute.Screen2>() == true -> "Screen 2"
-        backStackEntry?.destination?.hasRoute<NavigationRoute.Screen3>() == true -> "Screen 3"
-        else -> "Unknown Screen"
+        backStackEntry?.destination?.hasRoute<NavigationRoute.Screen1>() == true -> stringResource(R.string.screen1_name)
+        backStackEntry?.destination?.hasRoute<NavigationRoute.Screen2>() == true -> stringResource(R.string.screen2_name)
+        backStackEntry?.destination?.hasRoute<NavigationRoute.Screen3>() == true -> stringResource(R.string.screen3_name)
+        else -> stringResource(R.string.unknown_screen_name)
     }
 
     TopAppBar(
@@ -64,7 +65,7 @@ fun Screen1(navController: NavHostController){
         ),
             modifier = Modifier.width(LocalConfiguration.current.screenWidthDp.dp / 2)
         ) {
-            Text("Screen 2")
+            Text(stringResource(R.string.screen2_name))
         }
     }
 }
@@ -84,7 +85,7 @@ fun Screen2(navController: NavHostController){
         ),
             modifier = Modifier.weight(1F)
         ) {
-            Text("Screen 1")
+            Text(stringResource(R.string.screen1_name))
         }
 
         Button(onClick = {navController.navigate(NavigationRoute.Screen3)}, colors = ButtonDefaults.buttonColors(
@@ -93,7 +94,7 @@ fun Screen2(navController: NavHostController){
         ),
             modifier = Modifier.weight(1F)
         ) {
-            Text("Screen 3")
+            Text(stringResource(R.string.screen3_name))
         }
 
     }
@@ -114,7 +115,7 @@ fun Screen3(navController: NavHostController){
         ),
             modifier = Modifier.width(LocalConfiguration.current.screenWidthDp.dp / 2)
         ) {
-            Text("Screen 2")
+            Text(stringResource(R.string.screen2_name))
         }
     }
 }
