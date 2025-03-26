@@ -54,7 +54,7 @@ fun HomeScreen(){
     }
     Scaffold(
         topBar = {
-            TravelTobBar()
+            TravelTopBar()
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
@@ -80,7 +80,7 @@ fun HomeScreen(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TravelTobBar(){
+fun TravelTopBar(){
     CenterAlignedTopAppBar(
         title = { Text("Travel Diary")},
         actions = {
@@ -97,7 +97,6 @@ fun TravelTobBar(){
     )
 
 }
-
 
 @Composable
 fun TravelListItem(item: String){
