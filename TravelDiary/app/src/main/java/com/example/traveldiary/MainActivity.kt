@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.traveldiary.ui.screens.AddTravelScreen
 import com.example.traveldiary.ui.screens.HomeScreen
+import com.example.traveldiary.ui.screens.SettingsScreen
 import com.example.traveldiary.ui.screens.TravelDetailsScreen
 import com.example.traveldiary.ui.theme.TravelDiaryTheme
 
@@ -25,7 +26,8 @@ class MainActivity : ComponentActivity() {
             TravelDiaryTheme {
                 //HomeScreen()
 //                TravelDetailsScreen()
-                AddTravelScreen()
+//                AddTravelScreen()
+                SettingsScreen()
 
             }
         }
