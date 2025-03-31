@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppBar(){
     TopAppBar(
-        title = { Text("Title")},
+        title = { Text("Marghe puzzona")},
         navigationIcon = {
             IconButton(onClick = {}) {
                 Icon(Icons.Filled.Menu, "Menu")
@@ -58,7 +58,7 @@ fun AppBar(){
 
 @Composable
 fun MaterialList(){
-    val elems = (0..100).map { "Elem $it" }
+    val elems = (0..100).map { "🌼 brutta $it" }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(4.dp),
