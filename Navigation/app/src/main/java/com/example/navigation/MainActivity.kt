@@ -26,6 +26,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NavigationTheme {
+                /*
+                remember keyword allow us to compute just one time the composable function and then
+                store the result that will be for future recomposition
+                 */
                 val navController = rememberNavController()
                 Scaffold(
                     topBar = {AppBar(navController)},
@@ -39,14 +43,30 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/*
+In Java I would have something like:
+interface NavigationRoute {}
+class Screen1 implements NavigationRoute {}
+class Screen2 implements NavigationRoute {}
+class Screen3 implements NavigationRoute {}
+
+and then the objects that are instances of Screen classes
+NavigationRoute screen1 = new Screen1()
+ */
+
+/*
+type safe navigation, every route is identified by an object, and generate compile-time errors,
+not runtime errors
+ */
 sealed interface NavigationRoute{
     @Serializable
-    data object  Screen1
+    data object  Screen1 : NavigationRoute
     @Serializable
-    data object  Screen2
+    data object  Screen2 : NavigationRoute
     @Serializable
-    data object  Screen3
+    data object  Screen3 : NavigationRoute
 }
+
 
 @Composable
 fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier){
