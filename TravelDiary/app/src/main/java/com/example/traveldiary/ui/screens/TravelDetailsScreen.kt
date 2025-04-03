@@ -34,13 +34,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.traveldiary.ui.composables.AppBar
 import java.util.Date
 
 @Composable
-fun TravelDetailsScreen(){
+fun TravelDetailsScreen(navController: NavHostController, travelId : String){
     Scaffold(
         topBar = {
-            TravelDetailsBar()
+            AppBar(navController)
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
@@ -51,29 +53,29 @@ fun TravelDetailsScreen(){
         paddingValues -> Box(
             modifier = Modifier.padding(paddingValues),
         ){
-            TravelDetails()
+            TravelDetails(travelId)
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TravelDetailsBar(){
-    CenterAlignedTopAppBar(
-        title = { Text("Travel Details")},
-        actions = {
-            IconButton(onClick = {}) {
-                Icon(Icons.Filled.Settings, "Settings")
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
-    )
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun TravelDetailsBar(){
+//    CenterAlignedTopAppBar(
+//        title = { Text("Travel Details")},
+//        actions = {
+//            IconButton(onClick = {}) {
+//                Icon(Icons.Filled.Settings, "Settings")
+//            }
+//        },
+//        colors = TopAppBarDefaults.topAppBarColors(
+//            containerColor = MaterialTheme.colorScheme.surfaceVariant
+//        )
+//    )
+//}
 
 @Composable
-fun TravelDetails(){
+fun TravelDetails(travelId: String){
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(PaddingValues(top = 30.dp)),
@@ -90,7 +92,7 @@ fun TravelDetails(){
             contentDescription = "Travel Image"
         )
         Spacer(Modifier.size(20.dp))
-        Text("Destination", fontWeight = FontWeight.Bold, fontSize = 25.sp)
+        Text("Item $travelId", fontWeight = FontWeight.Bold, fontSize = 25.sp)
         Text("01/01/2025")
         Spacer(Modifier.size(20.dp))
         Text("Description")

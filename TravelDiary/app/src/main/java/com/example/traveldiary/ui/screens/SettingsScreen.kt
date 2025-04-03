@@ -18,11 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun SettingsScreen(){
+fun SettingsScreen(navController: NavHostController){
     Scaffold(
-        topBar = {SettingsAppBar()}
+        topBar = { AppBar(navController) }
     ) {contentPadding -> Column (
         Modifier.padding(contentPadding).padding(10.dp).fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -46,12 +48,12 @@ fun Settings(){
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SettingsAppBar(){
-    CenterAlignedTopAppBar(
-        title = { Text("Settings")},
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant)
-    )
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SettingsAppBar(){
+//    CenterAlignedTopAppBar(
+//        title = { Text("Settings")},
+//        colors = TopAppBarDefaults.topAppBarColors(
+//            containerColor = MaterialTheme.colorScheme.surfaceVariant)
+//    )
+//}

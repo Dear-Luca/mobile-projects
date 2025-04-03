@@ -45,16 +45,19 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.traveldiary.TravelDiaryRoute
+import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(navController: NavHostController){
     val elements = mutableListOf<String>()
     for (i in 1..20) {
         elements.add("Item $i")
     }
     Scaffold(
         topBar = {
-            TravelTopBar()
+            AppBar(navController)
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
@@ -71,38 +74,39 @@ fun HomeScreen(){
 
         ) {
             items(elements){
-                item -> TravelListItem(item)
+                item -> TravelListItem(item, navController)
             }
         }
 
     }
 }
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun TravelTopBar(){
+//    CenterAlignedTopAppBar(
+//        title = { Text("Travel Diary")},
+//        actions = {
+//            IconButton(onClick = {}) {
+//                Icon(Icons.Filled.Search, "Search item")
+//            }
+//            IconButton(onClick = {}) {
+//                Icon(Icons.Filled.Settings, "Settings")
+//            }
+//        },
+//        colors = TopAppBarDefaults.topAppBarColors(
+//            containerColor = MaterialTheme.colorScheme.surfaceVariant
+//        )
+//    )
+//
+//}
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TravelTopBar(){
-    CenterAlignedTopAppBar(
-        title = { Text("Travel Diary")},
-        actions = {
-            IconButton(onClick = {}) {
-                Icon(Icons.Filled.Search, "Search item")
-            }
-            IconButton(onClick = {}) {
-                Icon(Icons.Filled.Settings, "Settings")
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
-    )
-
-}
-
-@Composable
-fun TravelListItem(item: String){
+fun TravelListItem(item: String, navController: NavHostController){
     Card(
         modifier = Modifier.size(150.dp).fillMaxWidth(),
-        colors = CardDefaults.cardColors(contentColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(contentColor = MaterialTheme.colorScheme.surfaceVariant),
+        onClick = {navController.navigate(TravelDiaryRoute.TravelDetails(item))}
     ) {
         Column(
             modifier = Modifier.padding(16.dp).fillMaxSize(),

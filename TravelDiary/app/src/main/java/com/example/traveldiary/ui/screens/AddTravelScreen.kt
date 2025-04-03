@@ -39,11 +39,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun AddTravelScreen(){
+fun AddTravelScreen(navController: NavHostController){
     Scaffold(
-        topBar = { AddTravelScreenBar()},
+        topBar = { AppBar(navController)},
         floatingActionButton = {
             FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
                 Icon(Icons.Filled.Check, "share button")
@@ -57,21 +59,21 @@ fun AddTravelScreen(){
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AddTravelScreenBar(){
-    CenterAlignedTopAppBar(
-        title = { Text("Add Travel")},
-        actions = {
-            IconButton(onClick = {}) {
-                Icon(Icons.Filled.Settings, "Settings")
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-        containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
-    )
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun AddTravelScreenBar(){
+//    CenterAlignedTopAppBar(
+//        title = { Text("Add Travel")},
+//        actions = {
+//            IconButton(onClick = {}) {
+//                Icon(Icons.Filled.Settings, "Settings")
+//            }
+//        },
+//        colors = TopAppBarDefaults.topAppBarColors(
+//        containerColor = MaterialTheme.colorScheme.surfaceVariant
+//        )
+//    )
+//}
 
 @Composable
 fun AddTravelDetails(){
