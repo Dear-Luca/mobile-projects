@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.traveldiary.TravelDiaryRoute
+import com.example.traveldiary.ui.TravelDiaryRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -40,7 +40,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.traveldiary.TravelDiaryRoute
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
@@ -48,7 +47,7 @@ fun AddTravelScreen(navController: NavHostController){
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {navController.navigateUp()}, contentColor = MaterialTheme.colorScheme.tertiary) {
-                Icon(Icons.Filled.Check, "share button")
+                Icon(Icons.Filled.Check, "confirm button")
             }
         },
         topBar = { AppBar(navController, title = "Add Travel") },
