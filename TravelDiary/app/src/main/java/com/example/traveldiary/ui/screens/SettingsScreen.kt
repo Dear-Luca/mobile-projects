@@ -24,8 +24,8 @@ import com.example.traveldiary.ui.composables.AppBar
 @Composable
 fun SettingsScreen(navController: NavHostController){
     Scaffold(
-        topBar = { AppBar(navController) }
-    ) {contentPadding -> Column (
+        topBar = { AppBar(navController, title = "Settings") }
+    ){contentPadding -> Column (
         Modifier.padding(contentPadding).padding(10.dp).fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
         ){
@@ -47,13 +47,3 @@ fun Settings(){
         style = MaterialTheme.typography.bodyLarge
     )
 }
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun SettingsAppBar(){
-//    CenterAlignedTopAppBar(
-//        title = { Text("Settings")},
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.surfaceVariant)
-//    )
-//}

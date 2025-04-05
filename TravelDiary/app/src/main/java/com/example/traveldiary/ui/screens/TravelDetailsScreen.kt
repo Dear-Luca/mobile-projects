@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,6 +32,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,62 +42,48 @@ import com.example.traveldiary.ui.composables.AppBar
 import java.util.Date
 
 @Composable
-fun TravelDetailsScreen(navController: NavHostController, travelId : String){
+fun TravelDetailsScreen(navController: NavHostController, travelId : String) {
     Scaffold(
-        topBar = {
-            AppBar(navController)
-        },
+        topBar = { AppBar(navController, title = "Travel Details") },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
-                Icon(Icons.Filled.Share, "share button")
+            FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.tertiary,
+                onClick = { /*TODO*/ }
+            ) {
+                Icon(Icons.Outlined.Share, "Share Travel")
             }
+        },
+    ) { contentPadding ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(contentPadding).padding(12.dp).fillMaxSize()
+        ) {
+            Image(
+                Icons.Outlined.Image,
+                "Travel picture",
+                contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .size(128.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .padding(36.dp)
+            )
+            Text(
+                travelId,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                "01/01/2024",
+                style = MaterialTheme.typography.bodySmall
+            )
+            Spacer(Modifier.size(8.dp))
+            Text(
+                "Description",
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
-    ){
-        paddingValues -> Box(
-            modifier = Modifier.padding(paddingValues),
-        ){
-            TravelDetails(travelId)
-        }
-    }
-}
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun TravelDetailsBar(){
-//    CenterAlignedTopAppBar(
-//        title = { Text("Travel Details")},
-//        actions = {
-//            IconButton(onClick = {}) {
-//                Icon(Icons.Filled.Settings, "Settings")
-//            }
-//        },
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.surfaceVariant
-//        )
-//    )
-//}
-
-@Composable
-fun TravelDetails(travelId: String){
-    Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(PaddingValues(top = 30.dp)),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            Icons.Outlined.Image,
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .padding(30.dp),
-            contentDescription = "Travel Image"
-        )
-        Spacer(Modifier.size(20.dp))
-        Text("Item $travelId", fontWeight = FontWeight.Bold, fontSize = 25.sp)
-        Text("01/01/2025")
-        Spacer(Modifier.size(20.dp))
-        Text("Description")
     }
 }

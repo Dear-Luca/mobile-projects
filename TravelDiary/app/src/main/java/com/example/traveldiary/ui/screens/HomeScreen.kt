@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -50,84 +51,69 @@ import com.example.traveldiary.TravelDiaryRoute
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun HomeScreen(navController: NavHostController){
-    val elements = mutableListOf<String>()
-    for (i in 1..20) {
-        elements.add("Item $i")
-    }
+fun HomeScreen(navController: NavHostController) {
+    val items = (1..20).map { "Item n°$it" }
+
     Scaffold(
-        topBar = {
-            AppBar(navController)
-        },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
-                Icon(Icons.Filled.Add, "add item")
+            FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.tertiary,
+                onClick = {navController.navigate(TravelDiaryRoute.AddTravel) }
+            ) {
+                Icon(Icons.Outlined.Add, "Add Travel")
             }
-        }
-    ) {paddingValues ->
+        },
+        topBar = { AppBar(navController, title = "TravelDiary") }
+
+    ) { contentPadding ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = (PaddingValues(8.dp, 8.dp, 8.dp, 80.dp))
-
+            contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 80.dp),
+            modifier =  Modifier.padding(contentPadding)
         ) {
-            items(elements){
-                item -> TravelListItem(item, navController)
-            }
+            items(items) { item -> TravelItem(item, navController) }
         }
-
     }
 }
-//
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun TravelTopBar(){
-//    CenterAlignedTopAppBar(
-//        title = { Text("Travel Diary")},
-//        actions = {
-//            IconButton(onClick = {}) {
-//                Icon(Icons.Filled.Search, "Search item")
-//            }
-//            IconButton(onClick = {}) {
-//                Icon(Icons.Filled.Settings, "Settings")
-//            }
-//        },
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.surfaceVariant
-//        )
-//    )
-//
-//}
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TravelListItem(item: String, navController: NavHostController){
+fun TravelItem(item: String, navController: NavHostController) {
     Card(
-        modifier = Modifier.size(150.dp).fillMaxWidth(),
-        colors = CardDefaults.cardColors(contentColor = MaterialTheme.colorScheme.surfaceVariant),
-        onClick = {navController.navigate(TravelDiaryRoute.TravelDetails(item))}
+        onClick = {navController.navigate(TravelDiaryRoute.TravelDetails(item))},
+        modifier = Modifier
+            .size(150.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor =  MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp).fillMaxSize(),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
             Image(
                 Icons.Outlined.Image,
+                "Travel picture",
+                contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
                 modifier = Modifier
                     .size(72.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primaryContainer)
-                    .padding(10.dp),
-                contentDescription = "Travel Image"
-
+                    .padding(20.dp)
             )
-            Spacer(Modifier.size(10.dp))
+            Spacer(Modifier.size(8.dp))
             Text(
                 item,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
             )
         }
     }

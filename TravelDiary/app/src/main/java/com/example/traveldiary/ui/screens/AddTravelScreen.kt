@@ -40,75 +40,58 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.traveldiary.TravelDiaryRoute
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
 fun AddTravelScreen(navController: NavHostController){
     Scaffold(
-        topBar = { AppBar(navController)},
         floatingActionButton = {
-            FloatingActionButton(onClick = {}, contentColor = MaterialTheme.colorScheme.tertiary) {
+            FloatingActionButton(onClick = {navController.navigateUp()}, contentColor = MaterialTheme.colorScheme.tertiary) {
                 Icon(Icons.Filled.Check, "share button")
             }
-        }
+        },
+        topBar = { AppBar(navController, title = "Add Travel") },
 
-    ) {paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)){
-            AddTravelDetails()
-        }
+    ) {paddingValues -> AddTravelDetails(navController, paddingValues)
     }
 }
 
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun AddTravelScreenBar(){
-//    CenterAlignedTopAppBar(
-//        title = { Text("Add Travel")},
-//        actions = {
-//            IconButton(onClick = {}) {
-//                Icon(Icons.Filled.Settings, "Settings")
-//            }
-//        },
-//        colors = TopAppBarDefaults.topAppBarColors(
-//        containerColor = MaterialTheme.colorScheme.surfaceVariant
-//        )
-//    )
-//}
 
 @Composable
-fun AddTravelDetails(){
+fun AddTravelDetails(navController: NavHostController, paddingValues: PaddingValues) {
     Column(
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(PaddingValues(top = 10.dp))
+        modifier = Modifier
+            .padding(paddingValues)
+            .padding(12.dp)
             .fillMaxSize()
     ) {
         OutlinedTextField(
             value = "",
-            onValueChange = {},
-            label = { Text("Destination")},
+            onValueChange = { /*TODO*/ },
+            label = { Text("Destination") },
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
-                IconButton(onClick = {}) {
-                    Icon(Icons.Outlined.MyLocation, "Current Location")
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Outlined.MyLocation, "Current location")
                 }
             }
         )
         OutlinedTextField(
             value = "",
-            onValueChange = {},
-            label = { Text("Date")},
+            onValueChange = { /*TODO*/ },
+            label = { Text("Date") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = "",
-            onValueChange = {},
-            label = { Text("Description")},
+            onValueChange = { /*TODO*/ },
+            label = { Text("Description") },
             modifier = Modifier.fillMaxWidth()
         )
-
         Spacer(Modifier.size(24.dp))
-
         Button(
             onClick = { /*TODO*/ },
             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
@@ -121,7 +104,6 @@ fun AddTravelDetails(){
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
             Text("Take a picture")
         }
-
         Spacer(Modifier.size(8.dp))
         Image(
             Icons.Outlined.Image,

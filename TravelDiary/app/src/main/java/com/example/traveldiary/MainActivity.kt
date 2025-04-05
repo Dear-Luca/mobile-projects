@@ -29,12 +29,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             TravelDiaryTheme {
                 val navController = rememberNavController()
-                Scaffold(
-                    topBar = { AppBar(navController)},
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    innerPadding -> NavGraph(modifier = Modifier.padding(innerPadding), navController)
-                }
+                NavGraph(navController)
+
             }
         }
     }
@@ -55,9 +51,8 @@ sealed interface TravelDiaryRoute{
 }
 
 @Composable
-fun NavGraph(modifier: Modifier = Modifier, navController: NavHostController){
+fun NavGraph(navController: NavHostController){
     NavHost(
-        modifier = modifier,
         navController = navController,
         startDestination = TravelDiaryRoute.TravelDiary
     ){
