@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.example.todolist.data.database.Todo
 
 @Composable
 fun TodoListScreen(
@@ -35,7 +36,7 @@ fun TodoListScreen(
     LazyColumn(modifier = modifier) {
         item {
             AddTodoField(
-                onSubmit = { content -> actions.addTodo(Todo(content)) },
+                onSubmit = { content -> actions.addTodo(Todo(content = content)) },
                 modifier = Modifier.padding(16.dp)
             )
         }
