@@ -32,7 +32,8 @@ fun NavGraph(navController: NavHostController){
     val addTravelViewModel = viewModel<AddTravelViewModel>()
     val addTravelState by addTravelViewModel.state.collectAsStateWithLifecycle()
     val settingsViewModel = viewModel<SettingsViewModel>()
-    val settingsState by settingsViewModel.state.collectAsStateWithLifecycle()
+//    val settingsState by settingsViewModel.state.collectAsStateWithLifecycle()
+    val settingsState = settingsViewModel.state
     NavHost(
         navController = navController,
         startDestination = TravelDiaryRoute.TravelDiary
