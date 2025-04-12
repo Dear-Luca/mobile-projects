@@ -1,14 +1,18 @@
 package com.example.traveldiary.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.traveldiary.ui.screens.AddTravelScreen
-import com.example.traveldiary.ui.screens.HomeScreen
-import com.example.traveldiary.ui.screens.SettingsScreen
-import com.example.traveldiary.ui.screens.TravelDetailsScreen
+import com.example.traveldiary.ui.screens.addtravel.AddTravelScreen
+import com.example.traveldiary.ui.screens.addtravel.AddTravelViewModel
+import com.example.traveldiary.ui.screens.home.HomeScreen
+import com.example.traveldiary.ui.screens.settings.SettingsScreen
+import com.example.traveldiary.ui.screens.traveldetails.TravelDetailsScreen
 import kotlinx.serialization.Serializable
 
 sealed interface TravelDiaryRoute{
@@ -24,6 +28,8 @@ sealed interface TravelDiaryRoute{
 
 @Composable
 fun NavGraph(navController: NavHostController){
+    val addTravelViewModel = viewModel<AddTravelViewModel>()
+    val addTravelState by addTravelViewModel.state.collectAsStateWithLifecycle()
     NavHost(
         navController = navController,
         startDestination = TravelDiaryRoute.TravelDiary
@@ -32,7 +38,7 @@ fun NavGraph(navController: NavHostController){
         Routes Definition
          */
         composable<TravelDiaryRoute.TravelDiary> { HomeScreen(navController) }
-        composable<TravelDiaryRoute.AddTravel> { AddTravelScreen(navController) }
+        composable<TravelDiaryRoute.AddTravel> { AddTravelScreen(navController, addTravelState, addTravelViewModel.actions) }
         composable<TravelDiaryRoute.Settings> { SettingsScreen(navController) }
         composable<TravelDiaryRoute.TravelDetails> {
                 backStackEntry -> val travelDetails : TravelDiaryRoute.TravelDetails = backStackEntry.toRoute()

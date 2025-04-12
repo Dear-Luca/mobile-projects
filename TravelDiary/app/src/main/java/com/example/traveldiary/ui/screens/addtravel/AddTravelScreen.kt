@@ -1,9 +1,8 @@
-package com.example.traveldiary.ui.screens
+package com.example.traveldiary.ui.screens.addtravel
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,15 +13,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.MyLocation
 import androidx.compose.material.icons.outlined.PhotoCamera
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,8 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +36,7 @@ import androidx.navigation.NavHostController
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun AddTravelScreen(navController: NavHostController){
+fun AddTravelScreen(navController: NavHostController, state: AddTravelState, actions:AddTravelActions){
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {navController.navigateUp()}, contentColor = MaterialTheme.colorScheme.tertiary) {
@@ -52,13 +45,13 @@ fun AddTravelScreen(navController: NavHostController){
         },
         topBar = { AppBar(navController, title = "Add Travel") },
 
-    ) {paddingValues -> AddTravelDetails(navController, paddingValues)
+    ) {paddingValues -> AddTravelDetails(navController, paddingValues, state, actions)
     }
 }
 
 
 @Composable
-fun AddTravelDetails(navController: NavHostController, paddingValues: PaddingValues) {
+fun AddTravelDetails(navController: NavHostController, paddingValues: PaddingValues, state: AddTravelState, actions: AddTravelActions) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -68,8 +61,8 @@ fun AddTravelDetails(navController: NavHostController, paddingValues: PaddingVal
             .fillMaxSize()
     ) {
         OutlinedTextField(
-            value = "",
-            onValueChange = { /*TODO*/ },
+            value = state.destination,
+            onValueChange = { actions.setDestination(it) },
             label = { Text("Destination") },
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
@@ -79,14 +72,14 @@ fun AddTravelDetails(navController: NavHostController, paddingValues: PaddingVal
             }
         )
         OutlinedTextField(
-            value = "",
-            onValueChange = { /*TODO*/ },
+            value = state.date,
+            onValueChange = { actions.setDate(it) },
             label = { Text("Date") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
-            value = "",
-            onValueChange = { /*TODO*/ },
+            value = state.description,
+            onValueChange =  {actions.setDescription(it)} ,
             label = { Text("Description") },
             modifier = Modifier.fillMaxWidth()
         )

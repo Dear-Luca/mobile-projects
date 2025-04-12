@@ -16,10 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.traveldiary.ui.NavGraph
 import com.example.traveldiary.ui.composables.AppBar
-import com.example.traveldiary.ui.screens.AddTravelScreen
-import com.example.traveldiary.ui.screens.HomeScreen
-import com.example.traveldiary.ui.screens.SettingsScreen
-import com.example.traveldiary.ui.screens.TravelDetailsScreen
+
 import com.example.traveldiary.ui.theme.TravelDiaryTheme
 import kotlinx.serialization.Serializable
 
@@ -31,7 +28,6 @@ class MainActivity : ComponentActivity() {
             TravelDiaryTheme {
                 val navController = rememberNavController()
                 NavGraph(navController)
-
             }
         }
     }
