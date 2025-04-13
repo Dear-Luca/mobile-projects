@@ -15,6 +15,7 @@ import com.example.traveldiary.ui.screens.settings.SettingsScreen
 import com.example.traveldiary.ui.screens.settings.SettingsViewModel
 import com.example.traveldiary.ui.screens.traveldetails.TravelDetailsScreen
 import kotlinx.serialization.Serializable
+import org.koin.androidx.compose.koinViewModel
 
 sealed interface TravelDiaryRoute{
     @Serializable
@@ -29,11 +30,6 @@ sealed interface TravelDiaryRoute{
 
 @Composable
 fun NavGraph(navController: NavHostController){
-    val addTravelViewModel = viewModel<AddTravelViewModel>()
-    val addTravelState by addTravelViewModel.state.collectAsStateWithLifecycle()
-    val settingsViewModel = viewModel<SettingsViewModel>()
-//    val settingsState by settingsViewModel.state.collectAsStateWithLifecycle()
-    val settingsState = settingsViewModel.state
     NavHost(
         navController = navController,
         startDestination = TravelDiaryRoute.TravelDiary
@@ -42,8 +38,16 @@ fun NavGraph(navController: NavHostController){
         Routes Definition
          */
         composable<TravelDiaryRoute.TravelDiary> { HomeScreen(navController) }
-        composable<TravelDiaryRoute.AddTravel> { AddTravelScreen(navController, addTravelState, addTravelViewModel.actions) }
-        composable<TravelDiaryRoute.Settings> { SettingsScreen(navController, settingsViewModel::setUsername, settingsState) }
+        composable<TravelDiaryRoute.AddTravel> {
+            val addTravelViewModel = koinViewModel<AddTravelViewModel>()
+            val addTravelState by addTravelViewModel.state.collectAsStateWithLifecycle()
+            AddTravelScreen(navController, addTravelState, addTravelViewModel.actions)
+
+        }
+        composable<TravelDiaryRoute.Settings> {
+            val settingsViewModel = koinViewModel<SettingsViewModel>()
+            SettingsScreen(navController, settingsViewModel::setUsername, settingsViewModel.state)
+        }
         composable<TravelDiaryRoute.TravelDetails> {
                 backStackEntry -> val travelDetails : TravelDiaryRoute.TravelDetails = backStackEntry.toRoute()
             TravelDetailsScreen(navController, travelDetails.travelId)
