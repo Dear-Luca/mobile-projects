@@ -12,10 +12,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.camera.ui.theme.CameraTheme
+import com.example.camera.utils.rememberCameraLauncher
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CameraScreen() {
+    val cameraLauncher = rememberCameraLauncher()
+
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Box(
             contentAlignment = Alignment.Center,
@@ -42,7 +46,7 @@ fun CameraScreen() {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                Button(onClick = { /* TODO */ }) {
+                Button(onClick = { cameraLauncher.captureImage() }) {
                     Text("Take a Picture")
                 }
             }
