@@ -22,6 +22,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.camera.ui.theme.CameraTheme
 import com.example.camera.utils.rememberCameraLauncher
+import com.example.camera.utils.saveImageToStorage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CameraScreen() {
     val context = LocalContext.current
-    val cameraLauncher = rememberCameraLauncher()
+    val cameraLauncher = rememberCameraLauncher(
+        onPictureTaken = {imageUri -> saveImageToStorage(imageUri, context.contentResolver)}
+    )
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Box(
@@ -55,18 +58,20 @@ fun CameraScreen() {
                     Text("Take a Picture")
                 }
             }
+            /*
+             Use coil to show image
+            */
+            if (cameraLauncher.captureImageUri != Uri.EMPTY){
+                AsyncImage(
+                    ImageRequest.Builder(context)
+                        .data(cameraLauncher.captureImageUri)
+                        .crossfade(true)
+                        .build(),
+                    "Captured image"
+                )
+            }
+
         }
-        /*
-        Use coil to show image
-         */
-        if (cameraLauncher.captureImageUri != Uri.EMPTY){
-            AsyncImage(
-                ImageRequest.Builder(context)
-                    .data(cameraLauncher.captureImageUri)
-                    .crossfade(true)
-                    .build(),
-                "Captured image"
-            )
-        }
+
     }
 }
