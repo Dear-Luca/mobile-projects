@@ -2,7 +2,12 @@ package com.example.traveldiary
 
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
+import com.example.traveldiary.data.database.TravelDiaryDB
+import com.example.traveldiary.data.database.TripsDAO
 import com.example.traveldiary.data.repositories.SettingsRepository
+import com.example.traveldiary.data.repositories.TripsRepository
+import com.example.traveldiary.ui.TripsViewModel
 import com.example.traveldiary.ui.screens.addtravel.AddTravelViewModel
 import com.example.traveldiary.ui.screens.settings.SettingsViewModel
 import org.koin.core.module.dsl.viewModel
@@ -27,9 +32,31 @@ val koinModule = module {
     It's like SettingsRepository(dataStore)
      */
     single { SettingsRepository(get()) }
+    /*
+    singleton for Database
+     */
+    single {
+        Room.databaseBuilder(
+            get(),
+            TravelDiaryDB::class.java,
+            "travel-diary"
+        ).build()
+    }
+    /*
+    singleton for TripsRepository, used to connect db with the app
+     */
+    single { TripsRepository(get<TravelDiaryDB>().tripsDao()) }
+
     viewModel { AddTravelViewModel() }
     /*
     It's like SettingsViewModel(repository = SettingsRepository(dataStore))
      */
     viewModel { SettingsViewModel(get()) }
+
+    /*
+    Injecting the repository inside the constructor of TripsViewModel
+     */
+    viewModel { TripsViewModel(get()) }
+
+
 }
