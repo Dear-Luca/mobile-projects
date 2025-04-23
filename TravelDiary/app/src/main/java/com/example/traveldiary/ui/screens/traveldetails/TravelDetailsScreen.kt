@@ -27,15 +27,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.traveldiary.data.database.Trip
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun TravelDetailsScreen(navController: NavHostController, travelId : String) {
+fun TravelDetailsScreen(navController: NavHostController, trip : Trip) {
     val context = LocalContext.current
     fun shareContent(){
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, travelId)
+            putExtra(Intent.EXTRA_TEXT, trip.name)
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, "Share Travel")
@@ -72,16 +73,16 @@ fun TravelDetailsScreen(navController: NavHostController, travelId : String) {
                     .padding(36.dp)
             )
             Text(
-                travelId,
+                trip.name,
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                "01/01/2024",
+                trip.date,
                 style = MaterialTheme.typography.bodySmall
             )
             Spacer(Modifier.size(8.dp))
             Text(
-                "Description",
+                trip.description,
                 style = MaterialTheme.typography.bodyMedium
             )
         }

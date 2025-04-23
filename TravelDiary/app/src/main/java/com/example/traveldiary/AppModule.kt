@@ -33,7 +33,7 @@ val koinModule = module {
      */
     single { SettingsRepository(get()) }
     /*
-    singleton for Database
+    create Database
      */
     single {
         Room.databaseBuilder(
