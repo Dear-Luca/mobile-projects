@@ -36,22 +36,33 @@ import androidx.navigation.NavHostController
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun AddTravelScreen(navController: NavHostController, state: AddTravelState, actions:AddTravelActions){
+fun AddTravelScreen(
+    navController: NavHostController,
+    state: AddTravelState,
+    actions:AddTravelActions,
+    onSubmit: () -> Unit
+){
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = {navController.navigateUp()}, contentColor = MaterialTheme.colorScheme.tertiary) {
+            FloatingActionButton(
+                onClick = {
+                    onSubmit()
+                    navController.navigateUp()
+                },
+                contentColor = MaterialTheme.colorScheme.tertiary
+            ) {
                 Icon(Icons.Filled.Check, "confirm button")
             }
         },
         topBar = { AppBar(navController, title = "Add Travel") },
 
-    ) {paddingValues -> AddTravelDetails(navController, paddingValues, state, actions)
+    ) {paddingValues -> AddTravelDetails(paddingValues, state, actions)
     }
 }
 
 
 @Composable
-fun AddTravelDetails(navController: NavHostController, paddingValues: PaddingValues, state: AddTravelState, actions: AddTravelActions) {
+fun AddTravelDetails(paddingValues: PaddingValues, state: AddTravelState, actions: AddTravelActions) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

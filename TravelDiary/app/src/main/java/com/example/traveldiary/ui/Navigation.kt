@@ -1,6 +1,7 @@
 package com.example.traveldiary.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -24,7 +25,7 @@ sealed interface TravelDiaryRoute{
     @Serializable
     data object Settings : TravelDiaryRoute
     @Serializable
-    data object TravelDiary : TravelDiaryRoute
+    data object Home : TravelDiaryRoute
 }
 
 @Composable
@@ -34,26 +35,41 @@ fun NavGraph(navController: NavHostController){
 
     NavHost(
         navController = navController,
-        startDestination = TravelDiaryRoute.TravelDiary
+        startDestination = TravelDiaryRoute.Home
     ){
         /*
         Routes Definition
          */
-        composable<TravelDiaryRoute.TravelDiary> { HomeScreen(tripState ,navController) }
+        composable<TravelDiaryRoute.Home> { HomeScreen(tripState ,navController) }
+
         composable<TravelDiaryRoute.AddTravel> {
             val addTravelViewModel = koinViewModel<AddTravelViewModel>()
             val addTravelState by addTravelViewModel.state.collectAsStateWithLifecycle()
-            AddTravelScreen(navController, addTravelState, addTravelViewModel.actions)
+            AddTravelScreen(
+                navController,
+                addTravelState,
+                addTravelViewModel.actions,
+                onSubmit = {tripsViewModel.addTrip(addTravelState.toTrip())}
+            )
 
         }
         composable<TravelDiaryRoute.Settings> {
             val settingsViewModel = koinViewModel<SettingsViewModel>()
             SettingsScreen(navController, settingsViewModel::setUsername, settingsViewModel.state)
         }
+
         composable<TravelDiaryRoute.TravelDetails> { backStackEntry ->
             val route : TravelDiaryRoute.TravelDetails = backStackEntry.toRoute()
-            val trip = requireNotNull( tripState.trips.find { it.id ==  route.travelId})
-            TravelDetailsScreen(navController, trip)
+            val trip = tripState.trips.find { it.id ==  route.travelId}
+            if (trip == null) {
+                navController.navigateUp()
+            } else {
+                TravelDetailsScreen(
+                    navController,
+                    trip,
+                    onSubmit = { tripsViewModel.deleteTrip(trip) }
+                )
+            }
         }
     }
 }

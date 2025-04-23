@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.example.traveldiary.data.database.TravelDiaryDB
-import com.example.traveldiary.data.database.TripsDAO
 import com.example.traveldiary.data.repositories.SettingsRepository
 import com.example.traveldiary.data.repositories.TripsRepository
 import com.example.traveldiary.ui.TripsViewModel

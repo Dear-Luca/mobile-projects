@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,7 +32,11 @@ import com.example.traveldiary.data.database.Trip
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun TravelDetailsScreen(navController: NavHostController, trip : Trip) {
+fun TravelDetailsScreen(
+    navController: NavHostController,
+    trip: Trip,
+    onSubmit: () -> Unit
+) {
     val context = LocalContext.current
     fun shareContent(){
         val sendIntent: Intent = Intent().apply {
@@ -41,7 +46,6 @@ fun TravelDetailsScreen(navController: NavHostController, trip : Trip) {
         }
         val shareIntent = Intent.createChooser(sendIntent, "Share Travel")
         context.startActivity(shareIntent)
-
     }
 
     Scaffold(
@@ -85,6 +89,18 @@ fun TravelDetailsScreen(navController: NavHostController, trip : Trip) {
                 trip.description,
                 style = MaterialTheme.typography.bodyMedium
             )
+            Button(
+                onClick = {
+                    onSubmit()
+                    navController.navigateUp()
+                }
+            ) {
+                Text(
+                    "Delete Trip",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
         }
     }
 }

@@ -18,7 +18,11 @@ import androidx.navigation.NavHostController
 import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
-fun SettingsScreen(navController: NavHostController, changeUsername: (String) -> Unit, state: SettingsState){
+fun SettingsScreen(
+    navController: NavHostController,
+    changeUsername: (String) -> Unit,
+    state: SettingsState
+){
     Scaffold(
         topBar = { AppBar(navController, title = "Settings") }
     ){contentPadding -> Column (

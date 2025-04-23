@@ -15,8 +15,8 @@ interface TripsDAO{
     fun getAll()  : Flow<List<Trip>>
 
     @Upsert
-    fun upsert(trip: Trip)
+    suspend fun upsert(trip: Trip)
 
     @Delete
-    fun delete(trip: Trip)
+    suspend fun delete(trip: Trip)
 }

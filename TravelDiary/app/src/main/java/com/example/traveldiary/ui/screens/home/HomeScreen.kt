@@ -41,7 +41,7 @@ import com.example.traveldiary.ui.composables.AppBar
 
 @Composable
 fun HomeScreen(state: TripsState ,navController: NavHostController) {
-    val items = state.trips
+    val trips = state.trips
 
     Scaffold(
         floatingActionButton = {
@@ -62,16 +62,16 @@ fun HomeScreen(state: TripsState ,navController: NavHostController) {
             contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 80.dp),
             modifier =  Modifier.padding(contentPadding)
         ) {
-            items(items) { item -> TravelItem(item, navController) }
+            items(trips) { trip -> TravelItem(trip, navController) }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TravelItem(item: Trip, navController: NavHostController) {
+fun TravelItem(trip: Trip, navController: NavHostController) {
     Card(
-        onClick = {navController.navigate(TravelDiaryRoute.TravelDetails(item.id))},
+        onClick = {navController.navigate(TravelDiaryRoute.TravelDetails(trip.id))},
         modifier = Modifier
             .size(150.dp)
             .fillMaxWidth(),
@@ -99,7 +99,7 @@ fun TravelItem(item: Trip, navController: NavHostController) {
             )
             Spacer(Modifier.size(8.dp))
             Text(
-                item.name,
+                trip.name,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center

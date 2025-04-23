@@ -1,6 +1,7 @@
 package com.example.traveldiary.ui.screens.addtravel
 
 import androidx.lifecycle.ViewModel
+import com.example.traveldiary.data.database.Trip
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -12,7 +13,13 @@ data class AddTravelState(
     val destination: String = "",
     val date: String = "",
     val description: String = "",
-)
+){
+    fun toTrip() = Trip(
+        name = destination,
+        date = date,
+        description = description
+    )
+}
 
 interface AddTravelActions{
     fun setDestination(destination: String)
